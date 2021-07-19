@@ -1,13 +1,18 @@
-const readLine = require("readline");
+const fs = require('fs');
+let input = fs.readFileSync('./test.txt').toString().split('\n');
 
-const rl=readLine.createInterface({
-  input: process.stdin,
-  output:process.stdout
-});
+function plus(k, n){
+  if(k== 0){
+    return n;
+  }
+  else if(n==1){
+    return 1;
+  }
+  return plus(k, n-1)+plus(k-1,n);
+}
 
-rl.on("line", function(line) {
-	console.log("hello !", line);
-  	rl.close();
-}).on("close", function() {
-	process.exit();
-})
+
+const number = +input[0]
+for (var i = 1; i<number; i+=2){
+  console.log(plus(input[i]*1,input[i+1]*1));
+}
