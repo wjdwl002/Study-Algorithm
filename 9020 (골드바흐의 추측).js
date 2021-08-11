@@ -7,21 +7,20 @@ const rl = readline.createInterface({
 
 
 //2. input
-// var cnt = 0;
-// var T;
-// rl.on('line', (line) => {
-//     if(cnt == 0) {
-//         T = line; //첫번째 입력 T
-//         cnt++;
-//     }
-//     else if (cnt < T){
-//         cnt++;
-//         goldBach(line);
-//     }
-//     else{
-//         rl.close();
-//     }
-// })
+var cnt = 0;
+var T, _case;
+rl.on('line', (line) => {
+    if(cnt == 0) {
+        T = line * 1; //첫번째 입력 T
+        cnt++;
+    }
+    else if (cnt <= T){
+        cnt++;
+        goldBach(line*1);
+        if (cnt == T+1) rl.close();
+    }
+    else {rl.close();}
+})
 
 
 //3. 함수
@@ -39,11 +38,8 @@ function goldBach(N){
     const arrPrime = primeArray(1, N);
     const med = N / 2;
     for (var i = med; i<= N; i++)
-        console.log(i,arrPrime[i], N-i, arrPrime[N-i]);
-        if(arrPrime[i] == true && arrPrime[N-i] == true) {
-            console.log(i, N-i);
+        if(arrPrime[i] === true && arrPrime[N-i] === true) {
+            console.log(N-i, i);
             return ;
         }
 }
-
-console.log(goldBach(10));
