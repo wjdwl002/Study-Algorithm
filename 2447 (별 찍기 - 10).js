@@ -1,6 +1,7 @@
 const { resolveNaptr } = require("dns");
 const readline = require("readline");
 const rl = readline.createInterface({input : process.stdin, output:process.stdout});
+
 //2447
 let input;
 let result = "";
