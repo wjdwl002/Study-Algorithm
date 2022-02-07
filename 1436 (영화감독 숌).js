@@ -72,8 +72,22 @@ const ps = (function (process) {
 ps.main(async () => {
   /* main logic goes here */
 
-  let num = parseInt(await ps.readLine());
+  let num = await ps.readLine();
+  let find = 0;
+  for(let i=0; i<2666800; i++){
+      let digit = Math.floor(Math.log10(i) + 1);
+      for(let j=3; j<digit+3; j++){
+          if(Math.floor(i%Math.pow(10,j)/Math.pow(10,j-1))== 6 &&
+            Math.floor(i%Math.pow(10,j-1)/Math.pow(10,j-2))==6 &&
+            Math.floor(i%Math.pow(10,j-2)/Math.pow(10,j-3))==6) {
+                find++;
+                break;
+            }
+      }
+      if(find == num) {
+        console.log(i);
+        return;
+        }
 
-  
-  
+  }
 });
