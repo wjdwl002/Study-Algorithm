@@ -26,9 +26,6 @@ const ps = (function (process) {
           rl.close();
         });
     },
-    use(name, f) {
-      this[name] = f;
-    },
     readLine: async function readLine() {
       return new Promise((resolve) => {
         if (cursor < lines.length) {
@@ -46,25 +43,6 @@ const ps = (function (process) {
       const line = await this.readLine();
       return line.split(/\s/).map((t) => parseInt(t));
     },
-    write(data) {
-      process.stdout.write(data + "");
-    },
-    writeLine(data) {
-      process.stdout.write((data === undefined ? "" : data) + "\n");
-    },
-    range(start, end, step = 1) {
-      if (end === undefined) {
-        end = start;
-        start = 0;
-      }
-      return {
-        [Symbol.iterator]: function* () {
-          for (let i = start; i < end; i += step) {
-            yield i;
-          }
-        },
-      };
-    },
   };
 })(process);
 
@@ -72,22 +50,26 @@ const ps = (function (process) {
 ps.main(async () => {
   /* main logic goes here */
 
-  let num = await ps.readLine();
-  let find = 0;
-  for(let i=0; i<2666800; i++){
-      let digit = Math.floor(Math.log10(i) + 1);
-      for(let j=3; j<digit+3; j++){
-          if(Math.floor(i%Math.pow(10,j)/Math.pow(10,j-1))== 6 &&
-            Math.floor(i%Math.pow(10,j-1)/Math.pow(10,j-2))==6 &&
-            Math.floor(i%Math.pow(10,j-2)/Math.pow(10,j-3))==6) {
-                find++;
-                break;
-            }
-      }
-      if(find == nu           
-        console.log(i);
-        return;
-        }
-
+  let [num] = await ps.readArrayLine()
+  let arr = [];
+  for (let i =0; i<num; i++){
+      arr.push(parseInt(await ps.readLine()));
   }
+  
+  let tempArr = Array.from({length:10000},()=>0);
+  let newArr = [];
+
+  arr.forEach(el=>{
+      tempArr[el]++;
+  })
+
+  tempArr.forEach((el, i)=>{
+      for(let j=0; j<el; j++)
+      newArr.push(i);
+  })
+  
+
+  newArr.forEach(el=>{
+      console.log(el);
+  })
 });
