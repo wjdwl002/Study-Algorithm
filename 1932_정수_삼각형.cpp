@@ -2,7 +2,7 @@
 1932 정수 삼각형
 실버1
 DP
-2023.01.02
+2023.01.04
 */
 
 
@@ -14,20 +14,15 @@ using namespace std;
 */
 
 /* 문제 분석
-dp[1] = t[1][1]
-dp[2] = t[1][1] + t[2][1] 
-     or t[1][1] + t[2][2]
-dp[3] = t[1][1] + t[2][1] + t[3][1] 
-     or t[1][1] + t[2][1] + t[3][2]
-     or t[1][1] + t[2][2] + t[3][2]
-     or t[1][1] + t[2][2] + t[3][3]
-dp[4] = t[1][1] + t[2][1] + t[3][1] + t[4][1]
-     or t[1][1] + t[2][1] + t[3][1] + t[4][2] ..
+dp[N][k] = t[N][k]
+dp[N-1][1] = max(dp[N][1], dp[N][2]) + t[N-1][1]
+dp[N-1][2] = max(dp[N][2], dp[N][3]) + t[N-1][2]
+...
+dp[i][j] = max(dp[i+1][j], dp[i+1][j+1]) + t[i][j]
 
-dp[n][k] = dp[n-1][k] + t[n][k] or dp[n-1][k] + t[n][k+1] (k: 1 ~ n-1)
 */
 int N;
-int t[501][501], dp[501][501], dp2[501];
+int t[501][501], dp[501][501];
 
 int main(void) {
     ios::sync_with_stdio(0);
@@ -39,15 +34,16 @@ int main(void) {
             cin >> t[i][j];
     }
 
-    dp[1][1] = t[1][1];
-    for(int i=2; i<=N; i++){
-        dp[i][0] = 0;
-        for(int j=1; j<=i; j++){
-            dp[i][j] = (dp[i-1][j]+t[i][j], dp[i-1][j]+t[i][j+1]);
-            dp[i][0] = max(dp[i][0], dp[i][j]);
-        }
-        cout << i << " " << dp[i][0] << endl;
+    for(int i=1; i<=N; i++){
+        dp[N][i] = t[N][i]; // 마지막 줄
     }
 
+    for(int i=N-1; i>=1; i--){
+        for(int j=1; j<=i; j++){
+            dp[i][j] = max(dp[i+1][j], dp[i+1][j+1]) + t[i][j];
+            // cout << i << " " << j << " " << dp[i][j] << endl;
+        }
+    }
+    cout << dp[1][1] << endl;
 
 }
